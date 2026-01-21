@@ -1,5 +1,6 @@
 package pages;
 
+import driver.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -10,9 +11,12 @@ public class LoginPage {
 
     private WebDriver driver;
 
+    DriverFactory driverFactory = new DriverFactory(DriverFactory.getDriver());
+
     By username = By.xpath("//input[@name='username']");
     By password = By.xpath("//input[@name='password']");
     By loginButton = By.xpath("//button[@type='submit']");
+    By errorMessage = By.xpath("//div/p[contains(@class,'alert-content-text')]");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -32,7 +36,7 @@ public class LoginPage {
     }
 
     public void clickLogin() {
-        driver.findElement(loginButton).click();
+        driverFactory.findElement(loginButton).click();
     }
 
     public void login(String user, String pass) {
@@ -40,6 +44,8 @@ public class LoginPage {
         enterPassword(pass);
         clickLogin();
     }
+
+    public String getErrorMessage() {
+        return driver.findElement(errorMessage).getText();
+    }
 }
-
-

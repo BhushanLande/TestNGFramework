@@ -13,11 +13,9 @@ public class LoginTest extends BaseTest {
     DashboardPage dashboardPage;
 
     @BeforeMethod
-    public void setupPages() throws InterruptedException {
+    public void setupPages() {
         loginPage = new LoginPage(DriverFactory.getDriver());
         dashboardPage = new DashboardPage(DriverFactory.getDriver());
-        loginPage.login("Admin", "admin123");
-        loginPage.waitTime();
     }
 
 
@@ -29,7 +27,29 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void verifyUser() throws InterruptedException {
+        loginPage.login("Admin", "admin123");
+        loginPage.waitTime();
         dashboardPage.clickAdminTab();
         Assert.assertTrue(dashboardPage.validateUser("Jobin Sam"));
+    }
+    @Test
+    public void testInvalidUsername() throws InterruptedException {
+        loginPage.enterUsername("InvalidUser");
+        loginPage.enterPassword("admin123");
+        loginPage.clickLogin();
+        loginPage.waitTime();
+        Assert.assertTrue(loginPage.getErrorMessage().contains("Invalid credentials"));
+    }
+
+    @Test
+    public void testAdminSearchFunctionality() throws InterruptedException {
+        loginPage.login("Admin", "admin123");
+        loginPage.waitTime();
+        // Navigate to Admin Tab
+        dashboardPage.clickAdminTab();
+
+        // Search for a known user
+        dashboardPage.handleAutocompleteDropdown("Ranga Akunuri");
+        Assert.assertTrue(dashboardPage.validateUser("Ranga Akunuri"), "Search for 'Ranga Akunuri' failed");
     }
 }

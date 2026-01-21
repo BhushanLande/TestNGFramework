@@ -1,25 +1,27 @@
 package pages;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Program {
-    public static void main(String [] args){
-        HashSet<Integer> set1 =  new HashSet<>(Arrays.asList(1,2,3,4));
-        HashSet<Integer> set2 = new HashSet<>(Arrays.asList(3,4,5,6));
+    public static void main(String[] args) {
+        String test = "tesT@38219$";
 
-        /*
-        HashSet<Integer> commonInSet = new HashSet<>();
-        for(int i : set1){
-            if(set2.add(i)){
-                commonInSet.add(i);
+        ArrayList<Character> symbols = new ArrayList<>();
+        ArrayList<Character> chars = new ArrayList<>();
+        ArrayList<Character> integers = new ArrayList<>();
+
+        for (char c : test.toCharArray()) {
+            if (Character.isDigit(c)) {
+                integers.add(c);
+            } else if (Character.isAlphabetic(c)) {
+                chars.add(c);
+            } else {
+                symbols.add(c);
             }
         }
 
-        System.out.println(commonInSet.toString());
-        */
-
-        set1.removeAll(set2);
-        System.out.println(set1);
+        System.out.println("Symbols from string are: " + symbols);
+        System.out.println("Characters from string are: " + chars);
+        System.out.println("Integers from string are: " + integers);
     }
 }
