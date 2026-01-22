@@ -14,7 +14,7 @@ public class LoginPage {
     DriverFactory driverFactory = new DriverFactory(DriverFactory.getDriver());
 
     By username = By.xpath("//input[@name='username']");
-    By password = By.xpath("//input[@name='password']");
+    By password = By.xpath("//input[@class='password']");
     By loginButton = By.xpath("//button[@type='submit']");
     By errorMessage = By.xpath("//div/p[contains(@class,'alert-content-text')]");
 
@@ -28,11 +28,11 @@ public class LoginPage {
 
     public void enterUsername(String user) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.findElement(username).sendKeys(user);
+        driverFactory.findElement(username).sendKeys(user);
     }
 
     public void enterPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+        driverFactory.findElement(password).sendKeys(pass);
     }
 
     public void clickLogin() {
@@ -46,6 +46,6 @@ public class LoginPage {
     }
 
     public String getErrorMessage() {
-        return driver.findElement(errorMessage).getText();
+        return driverFactory.findElement(errorMessage).getText();
     }
 }
